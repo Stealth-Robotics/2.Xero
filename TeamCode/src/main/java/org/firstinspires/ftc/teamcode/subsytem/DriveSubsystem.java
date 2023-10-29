@@ -17,10 +17,10 @@ public class DriveSubsystem extends SubsystemBase {
     final BNO055IMU imu;
 
     public DriveSubsystem(HardwareMap hardwareMap) {
-        leftFrontDrive = hardwareMap.get(DcMotor.class, "leftFrontDrive");
-        leftRearDrive = hardwareMap.get(DcMotor.class, "leftRearDrive");
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "rightFrontDrive");
-        rightRearDrive = hardwareMap.get(DcMotor.class, "rightRearDrive");
+        leftFrontDrive = hardwareMap.get(DcMotor.class, "frontLeftMotor");
+        leftRearDrive = hardwareMap.get(DcMotor.class, "backLeftMotor");
+        rightFrontDrive = hardwareMap.get(DcMotor.class, "frontRightMotor");
+        rightRearDrive = hardwareMap.get(DcMotor.class, "backRightMotor");
 
         leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         leftRearDrive.setDirection(DcMotor.Direction.REVERSE);
