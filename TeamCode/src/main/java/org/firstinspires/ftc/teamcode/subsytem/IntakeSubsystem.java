@@ -12,10 +12,11 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeMotor = hardwareMap.get(DcMotor.class,"intakeMotor");
 
     }
-
+    //pulls in at speed
     public void pullIn(double speed) {
         intakeMotor.setPower(speed);
     }
+    //pushes out at speed
     public void pushOut(double speed) {
         intakeMotor.setPower(-speed);
     }

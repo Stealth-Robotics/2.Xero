@@ -4,7 +4,9 @@ import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.command.AutonomousCommand;
+import org.firstinspires.ftc.teamcode.subsytem.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.DriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.ElevatorSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.IntakeSubsystem;
@@ -14,8 +16,9 @@ public class Autonomous extends LinearOpMode {
     DriveSubsystem driveSubsystem;
 
     IntakeSubsystem intakeSubsystem;
+    Telemetry telemetry;
 
-    ElevatorSubsystem elevatorSubsystem;
+    ArmSubsystem armSubsystem;
 
     GamepadEx driveGamepad;
 
@@ -24,13 +27,13 @@ public class Autonomous extends LinearOpMode {
 
         driveSubsystem = new DriveSubsystem(hardwareMap);
         intakeSubsystem = new IntakeSubsystem(hardwareMap);
-        elevatorSubsystem = new ElevatorSubsystem(hardwareMap);
+        armSubsystem = new ArmSubsystem(hardwareMap, telemetry);
         CommandScheduler.getInstance().registerSubsystem(driveSubsystem, intakeSubsystem);
 
         while (!isStarted()) {
 
         }
-        CommandScheduler.getInstance().schedule(new AutonomousCommand(driveSubsystem,intakeSubsystem,elevatorSubsystem));
+        CommandScheduler.getInstance().schedule(new AutonomousCommand(driveSubsystem,intakeSubsystem,armSubsystem));
         while (!isStopRequested()&&opModeIsActive()) {
             CommandScheduler.getInstance().run();
         }

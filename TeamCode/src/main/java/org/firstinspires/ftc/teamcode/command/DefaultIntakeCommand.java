@@ -23,13 +23,12 @@ public class DefaultIntakeCommand extends CommandBase {
     }
     @Override
     public void execute() {
-        /*telemetry.addData("leftTrigger", leftTrigger.getAsDouble());
-        telemetry.addData("rightTrigger", rightTrigger.getAsDouble());
-        telemetry.update();*/
+        //runs intake at speed controlled by leftTrigger when leftTrigger is pressed
         if (leftTrigger.getAsDouble()>.5){
             intake.pullIn(leftTrigger.getAsDouble());
         }
         else {
+            //runs intake backwards at speed controlled by rightTrigger when rightTrigger is pressed.
             if (rightTrigger.getAsDouble() > .5) {
                 intake.pushOut(rightTrigger.getAsDouble());
             }

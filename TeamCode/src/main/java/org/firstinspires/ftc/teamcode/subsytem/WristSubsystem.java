@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.SerialNumber;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class WristSubsystem extends SubsystemBase {
-    private static Servo wristServo;
+    private Servo wristServo;
     Telemetry telemetry;
 
     public WristSubsystem (HardwareMap hardwareMap, Telemetry telemetry){
@@ -17,8 +17,8 @@ public class WristSubsystem extends SubsystemBase {
         wristServo = hardwareMap.get(Servo.class,"wristServo");
         this.telemetry = telemetry;
     }
-
-    public static void wristRotate(double y){
+    //rotates wrist to position
+    public void wristRotate(double y){
         wristServo.setPosition(y);
     }
 

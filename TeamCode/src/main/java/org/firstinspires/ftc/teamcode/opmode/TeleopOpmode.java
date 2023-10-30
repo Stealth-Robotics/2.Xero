@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.subsytem.DriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.WristSubsystem;
+import com.acmerobotics.dashboard.*;
 
 @TeleOp(name = "TeleOp2")
 public class TeleopOpmode extends CommandOpMode {
@@ -27,19 +28,24 @@ public class TeleopOpmode extends CommandOpMode {
     WristSubsystem wristSubsystem;
 
     ArmSubsystem armSubsystem;
-
+    //separate gamepads for movement and driving
     GamepadEx driveGamepad;
 
     GamepadEx movementGamepad;
 
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+
     @Override
     public void initialize() {
+
+        telemetry = dashboard.getTelemetry();
 
         driveGamepad = new GamepadEx(gamepad1);
         movementGamepad = new GamepadEx(gamepad2);
 
         driveSubsystem = new DriveSubsystem(hardwareMap);
         intakeSubsystem = new IntakeSubsystem(hardwareMap);
+        //these two have telemetry so they can print data to the screen
         wristSubsystem = new WristSubsystem(hardwareMap, telemetry);
         armSubsystem = new ArmSubsystem(hardwareMap, telemetry);
 
@@ -51,8 +57,8 @@ public class TeleopOpmode extends CommandOpMode {
                 () -> driveGamepad.getRightY(),
                 () -> driveGamepad.getLeftX(),
                 () -> driveGamepad.getGamepadButton(GamepadKeys.Button.A).get()));
-
-        intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem,
+        //Decided to make leftTrigger use the Right Trigger because it felt more natural to use the right trigger for intake
+        /*intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem,
                 () -> driveGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER),
                 () -> driveGamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)));
 

@@ -13,6 +13,7 @@ public class LauncherSubsystem extends SubsystemBase {
     public LauncherSubsystem(HardwareMap hardwareMap){
         leverServo = hardwareMap.get(Servo.class, "leverServo");
     }
+    //rotates lever to a position
     public void rotateLever(double y){
         leverServo.setPosition(y);
     }
