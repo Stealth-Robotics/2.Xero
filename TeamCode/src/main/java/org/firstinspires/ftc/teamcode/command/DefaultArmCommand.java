@@ -14,6 +14,10 @@ public class DefaultArmCommand extends CommandBase {
 
     final DoubleSupplier leftStickY;
 
+    boolean setpointSetOnce = false;
+
+    //Top and bottom of where the arm can go without colliding with other parts of robot
+
     final double ArmMax = 1;
     final double ArmMin = 1;
 
@@ -28,6 +32,7 @@ public class DefaultArmCommand extends CommandBase {
         addRequirements(wrist);
     }
 
+
     @Override
     public void execute() {
         /*if ((arm.getPosition() >= ArmMax && leftStickY.getAsDouble() < 0)||
@@ -35,8 +40,19 @@ public class DefaultArmCommand extends CommandBase {
                 (ArmMin < arm.getPosition() && arm.getPosition() < ArmMax)){
             ArmSubsystem.elevatorRotate(leftStickY.getAsDouble());
         }*/
-        ArmSubsystem.elevatorRotate(leftStickY.getAsDouble()/5);
-        arm.periodic();
-        wrist.periodic();
+        //Runs the arm at speed (leftstickY/5)
+        if (Math.abs(leftStickY.getAsDouble())>0.1){
+            arm.setRunPID(false);
+            arm.setPower(leftStickY.getAsDouble()/5);
+            wrist.wristRotate(0.7);
+            setpointSetOnce = false;
+        }
+
+        else if (!setpointSetOnce){
+            setpointSetOnce = true;
+            arm.setRunPID(true);
+            arm.setSetPoint(arm.getPosition());
+        }
+
    }
 }
