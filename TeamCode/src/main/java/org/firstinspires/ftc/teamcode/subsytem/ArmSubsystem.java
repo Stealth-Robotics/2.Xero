@@ -16,7 +16,7 @@ public class ArmSubsystem extends SubsystemBase {
     private final PIDController armController;
 
     Telemetry telemetry;
-    double kp = 0.05;
+    double kp = 0.085;
     double kd = 0.0001;
     double ki = 0;
 

@@ -9,12 +9,16 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.command.DefaultArmCommand;
+import org.firstinspires.ftc.teamcode.command.DefaultFingerCommand;
 import org.firstinspires.ftc.teamcode.command.DefaultIntakeCommand;
 import org.firstinspires.ftc.teamcode.command.DefaultDriveCommand;
+import org.firstinspires.ftc.teamcode.command.DefaultWristCommand;
 import org.firstinspires.ftc.teamcode.scaffolding.WristScaffolding;
 import org.firstinspires.ftc.teamcode.subsytem.DriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.ArmSubsystem;
+import org.firstinspires.ftc.teamcode.subsytem.FingerSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.subsytem.LauncherSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.WristSubsystem;
 import com.acmerobotics.dashboard.*;
 
@@ -22,12 +26,12 @@ import com.acmerobotics.dashboard.*;
 public class TeleopOpmode extends CommandOpMode {
 
     DriveSubsystem driveSubsystem;
-
     IntakeSubsystem intakeSubsystem;
-
     WristSubsystem wristSubsystem;
-
     ArmSubsystem armSubsystem;
+    FingerSubsystem fingerSubsystem;
+    DefaultArmCommand defaultArmCommand;
+    LauncherSubsystem launcherSubsystem;
     //separate gamepads for movement and driving
     GamepadEx driveGamepad;
 
@@ -48,6 +52,8 @@ public class TeleopOpmode extends CommandOpMode {
         //these two have telemetry so they can print data to the screen
         wristSubsystem = new WristSubsystem(hardwareMap, telemetry);
         armSubsystem = new ArmSubsystem(hardwareMap, telemetry);
+        launcherSubsystem = new LauncherSubsystem(hardwareMap, telemetry);
+        fingerSubsystem = new FingerSubsystem(hardwareMap, telemetry);
 
         register(driveSubsystem);
         register(intakeSubsystem);
@@ -58,18 +64,27 @@ public class TeleopOpmode extends CommandOpMode {
                 () -> driveGamepad.getLeftX(),
                 () -> driveGamepad.getGamepadButton(GamepadKeys.Button.A).get()));
         //Decided to make leftTrigger use the Right Trigger because it felt more natural to use the right trigger for intake
-        /*intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem,
+        intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem,
                 () -> driveGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER),
                 () -> driveGamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)));
 
         //wristSubsystem.setDefaultCommand(new DefaultArmCommand(armSubsystem, wristSubsystem, () -> movementGamepad.getLeftY()));
+        //wristSubsystem.setDefaultCommand(new DefaultWristCommand(wristSubsystem, armSubsystem.getPosition(), defaultArmCommand));
 
-        /*wristSubsystem.setDefaultCommand(new WristScaffolding(wristSubsystem,
-                () -> movementGamepad.getButton(GamepadKeys.Button.A),
+        driveGamepad.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(1)));
+        driveGamepad.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0)));
+        driveGamepad.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0.33)));
+        driveGamepad.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0.672)));
+
+        armSubsystem.setDefaultCommand(new DefaultArmCommand(armSubsystem, () -> movementGamepad.getLeftY()));
+
+        fingerSubsystem.setDefaultCommand(new DefaultFingerCommand(fingerSubsystem,
                 () -> movementGamepad.getButton(GamepadKeys.Button.B),
-                () -> movementGamepad.getButton(GamepadKeys.Button.X))); */
+                () -> movementGamepad.getButton(GamepadKeys.Button.X),
+                () -> movementGamepad.getButton(GamepadKeys.Button.Y),
+                () -> movementGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)));
 
-        armSubsystem.setDefaultCommand(new DefaultArmCommand(armSubsystem, wristSubsystem, () -> movementGamepad.getLeftY()));
+
 
     }
 }
