@@ -12,7 +12,9 @@ import org.firstinspires.ftc.teamcode.command.DefaultArmCommand;
 import org.firstinspires.ftc.teamcode.command.DefaultFingerCommand;
 import org.firstinspires.ftc.teamcode.command.DefaultIntakeCommand;
 import org.firstinspires.ftc.teamcode.command.DefaultDriveCommand;
+import org.firstinspires.ftc.teamcode.command.DefaultLauncherCommand;
 import org.firstinspires.ftc.teamcode.command.DefaultWristCommand;
+import org.firstinspires.ftc.teamcode.command.ResetArmCommand;
 import org.firstinspires.ftc.teamcode.scaffolding.WristScaffolding;
 import org.firstinspires.ftc.teamcode.subsytem.DriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.ArmSubsystem;
@@ -71,20 +73,22 @@ public class TeleopOpmode extends CommandOpMode {
         //wristSubsystem.setDefaultCommand(new DefaultArmCommand(armSubsystem, wristSubsystem, () -> movementGamepad.getLeftY()));
         //wristSubsystem.setDefaultCommand(new DefaultWristCommand(wristSubsystem, armSubsystem.getPosition(), defaultArmCommand));
 
-        driveGamepad.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(1)));
-        driveGamepad.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0)));
-        driveGamepad.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0.33)));
-        driveGamepad.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0.672)));
+        movementGamepad.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0)));
+        movementGamepad.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0.2)));
+        movementGamepad.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0.5)));
 
         armSubsystem.setDefaultCommand(new DefaultArmCommand(armSubsystem, () -> movementGamepad.getLeftY()));
+        driveGamepad.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new ResetArmCommand(armSubsystem));
 
         fingerSubsystem.setDefaultCommand(new DefaultFingerCommand(fingerSubsystem,
                 () -> movementGamepad.getButton(GamepadKeys.Button.B),
-                () -> movementGamepad.getButton(GamepadKeys.Button.X),
+                () -> driveGamepad.getButton(GamepadKeys.Button.X),
                 () -> movementGamepad.getButton(GamepadKeys.Button.Y),
                 () -> movementGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)));
-
-
+        //launcherSubsystem.setDefaultCommand(new DefaultLauncherCommand(launcherSubsystem,()->movementGamepad.getButton(GamepadKeys.Button.A)));
+        movementGamepad.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new InstantCommand(() -> launcherSubsystem.rotateLever(0.7
+        )));
+        movementGamepad.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new InstantCommand(() -> launcherSubsystem.rotateLever(1)));
 
     }
 }
