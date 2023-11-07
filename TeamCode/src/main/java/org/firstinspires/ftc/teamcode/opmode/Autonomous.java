@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode;
+/*package org.firstinspires.ftc.teamcode.opmode;
 
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -41,3 +41,4 @@ public class Autonomous extends LinearOpMode {
 
     }
 }
+*/

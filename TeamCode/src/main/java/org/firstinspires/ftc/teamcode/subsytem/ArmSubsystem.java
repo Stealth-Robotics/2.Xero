@@ -50,6 +50,10 @@ public class ArmSubsystem extends SubsystemBase {
         armController.setSetPoint(setPoint);
     }
 
+    public boolean atSetpoint()
+    {
+        return armController.atSetPoint();
+    }
 
     public void setRunPID(boolean newValue)
     {
@@ -71,6 +75,7 @@ public class ArmSubsystem extends SubsystemBase {
             elevatorRotMotor.setPower(-calc);
         }
         telemetry.addData("error: ", armController.getPositionError());
+        telemetry.update();
 
 
     }
