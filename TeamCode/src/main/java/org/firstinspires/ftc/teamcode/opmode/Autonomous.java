@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode;
+/*package org.firstinspires.ftc.teamcode.opmode;
 
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -8,7 +8,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.command.AutonomousCommand;
 import org.firstinspires.ftc.teamcode.subsytem.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.DriveSubsystem;
-import org.firstinspires.ftc.teamcode.subsytem.ElevatorSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.IntakeSubsystem;
 
 public class Autonomous extends LinearOpMode {
@@ -42,3 +41,4 @@ public class Autonomous extends LinearOpMode {
 
     }
 }
+*/

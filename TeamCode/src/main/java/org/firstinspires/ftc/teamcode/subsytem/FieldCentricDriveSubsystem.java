@@ -9,14 +9,14 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  * This is the most basic Mecanum subsystem you can have, and provides simple methods to drive, stop,
  * and get some information about the position of the wheels.
  */
-public class DriveSubsystem extends SubsystemBase {
+public class FieldCentricDriveSubsystem extends SubsystemBase {
     final DcMotor leftFrontDrive;
     final DcMotor leftRearDrive;
     final DcMotor rightFrontDrive;
     final DcMotor rightRearDrive;
     final BNO055IMU imu;
 
-    public DriveSubsystem(HardwareMap hardwareMap) {
+    public FieldCentricDriveSubsystem(HardwareMap hardwareMap) {
         leftFrontDrive = hardwareMap.get(DcMotor.class, "frontLeftMotor");
         leftRearDrive = hardwareMap.get(DcMotor.class, "backLeftMotor");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "frontRightMotor");

@@ -10,8 +10,9 @@ public class LauncherSubsystem extends SubsystemBase {
 
     public Servo leverServo;
     Telemetry telemetry;
-    public LauncherSubsystem(HardwareMap hardwareMap){
+    public LauncherSubsystem(HardwareMap hardwareMap, Telemetry telemetry){
         leverServo = hardwareMap.get(Servo.class, "leverServo");
+        this.telemetry = telemetry;
     }
     //rotates lever to a position
     public void rotateLever(double y){

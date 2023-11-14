@@ -13,10 +13,12 @@ import org.firstinspires.ftc.teamcode.command.DefaultFingerCommand;
 import org.firstinspires.ftc.teamcode.command.DefaultIntakeCommand;
 import org.firstinspires.ftc.teamcode.command.DefaultDriveCommand;
 import org.firstinspires.ftc.teamcode.command.DefaultWristCommand;
+import org.firstinspires.ftc.teamcode.command.FieldDriveCommand;
 import org.firstinspires.ftc.teamcode.scaffolding.WristScaffolding;
 import org.firstinspires.ftc.teamcode.subsytem.CameraSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.DriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.ArmSubsystem;
+import org.firstinspires.ftc.teamcode.subsytem.FieldCentricDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.FingerSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.LauncherSubsystem;
@@ -26,8 +28,8 @@ import org.stealthrobotics.library.Alliance;
 
 import com.acmerobotics.dashboard.*;
 
-@TeleOp(name = "TeleOp2")
-public class TeleopOpmode extends CommandOpMode {
+@TeleOp(name = "Skibidi Ohio")
+public class FieldCentricTeleopOpmode extends CommandOpMode {
 
     DriveSubsystem driveSubsystem;
     IntakeSubsystem intakeSubsystem;
@@ -36,6 +38,7 @@ public class TeleopOpmode extends CommandOpMode {
     FingerSubsystem fingerSubsystem;
     DefaultArmCommand defaultArmCommand;
     LauncherSubsystem launcherSubsystem;
+    FieldCentricDriveSubsystem fieldCentricDriveSubsystem;
     CameraSubsystem cameraSubsystem;
     //separate gamepads for movement and driving
     GamepadEx driveGamepad;
@@ -64,7 +67,7 @@ public class TeleopOpmode extends CommandOpMode {
         register(driveSubsystem);
         register(intakeSubsystem);
 
-        driveSubsystem.setDefaultCommand(new DefaultDriveCommand(driveSubsystem,
+        driveSubsystem.setDefaultCommand(new FieldDriveCommand(fieldCentricDriveSubsystem,
                 () -> driveGamepad.getRightX(),
                 () -> driveGamepad.getRightY(),
                 () -> driveGamepad.getLeftX(),
