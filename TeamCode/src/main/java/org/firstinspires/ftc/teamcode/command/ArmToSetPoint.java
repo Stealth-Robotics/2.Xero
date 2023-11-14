@@ -1,4 +1,4 @@
-/*package org.firstinspires.ftc.teamcode.command;
+package org.firstinspires.ftc.teamcode.command;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
@@ -24,4 +24,4 @@ public class ArmToSetpoint extends CommandBase {
     public boolean isFinished() {
         return armSubsystem.atSetpoint();
     }
-}*/
+}
