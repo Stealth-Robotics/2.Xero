@@ -52,7 +52,7 @@ public class DriveSubsystem extends SubsystemBase {
         // This code is pulled from Game Manual 0
         // https://gm0.org/en/latest/docs/software/mecanum-drive.html
 
-        double y = -leftSickY; // Remember, this is reversed!
+        double y = leftSickY; // Remember, this is reversed!
         double x = leftStickX * 1.1; // Counteract imperfect strafing
         double rotation = rightStickX;
 

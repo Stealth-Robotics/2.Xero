@@ -25,6 +25,7 @@ import org.firstinspires.ftc.teamcode.subsytem.pipelines.PropProcessor;
 import org.stealthrobotics.library.Alliance;
 
 import com.acmerobotics.dashboard.*;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 
 @TeleOp(name = "TeleOp2")
 public class TeleopOpmode extends CommandOpMode {
@@ -52,6 +53,8 @@ public class TeleopOpmode extends CommandOpMode {
         driveGamepad = new GamepadEx(gamepad1);
         movementGamepad = new GamepadEx(gamepad2);
 
+
+
         driveSubsystem = new DriveSubsystem(hardwareMap);
         intakeSubsystem = new IntakeSubsystem(hardwareMap);
         //these two have telemetry so they can print data to the screen
@@ -65,30 +68,37 @@ public class TeleopOpmode extends CommandOpMode {
         register(intakeSubsystem);
 
         driveSubsystem.setDefaultCommand(new DefaultDriveCommand(driveSubsystem,
-                () -> driveGamepad.getRightX(),
-                () -> driveGamepad.getRightY(),
                 () -> driveGamepad.getLeftX(),
+                () -> -driveGamepad.getLeftY(),
+                () -> driveGamepad.getRightX(),
                 () -> driveGamepad.getGamepadButton(GamepadKeys.Button.A).get()));
         //Decided to make leftTrigger use the Right Trigger because it felt more natural to use the right trigger for intake
         intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem,
                 () -> driveGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER),
                 () -> driveGamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)));
 
-        //wristSubsystem.setDefaultCommand(new DefaultArmCommand(armSubsystem, wristSubsystem, () -> movementGamepad.getLeftY()));
-        //wristSubsystem.setDefaultCommand(new DefaultWristCommand(wristSubsystem, armSubsystem.getPosition(), defaultArmCommand));
-
-        driveGamepad.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(1)));
-        driveGamepad.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0)));
-        driveGamepad.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0.33)));
-        driveGamepad.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0.672)));
-
         armSubsystem.setDefaultCommand(new DefaultArmCommand(armSubsystem, () -> movementGamepad.getLeftY()));
 
+        //wristSubsystem.setDefaultCommand(new DefaultArmCommand(armSubsystem, wristSubsystem, () -> movementGamepad.getLeftY()));
+        //wristSubsystem.setDefaultCommand(new DefaultWristCommand(wristSubsystem, armSubsystem.getPosition(), defaultArmCommand));
+        wristSubsystem.setDefaultCommand(new DefaultWristCommand(wristSubsystem, ()-> armSubsystem.getPosition(),() -> movementGamepad.getLeftY()));
+
+        /*movementGamepad.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0.23)));
+        movementGamepad.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0)));
+        movementGamepad.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0.5)));*/
+
+
+
+        driveGamepad.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new InstantCommand(()->launcherSubsystem.rotateLever(1)));
+        driveGamepad.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new InstantCommand(()->launcherSubsystem.rotateLever(0)));
+
         fingerSubsystem.setDefaultCommand(new DefaultFingerCommand(fingerSubsystem,
-                () -> movementGamepad.getButton(GamepadKeys.Button.B),
+                () -> movementGamepad.getButton(GamepadKeys.Button.RIGHT_BUMPER),
                 () -> movementGamepad.getButton(GamepadKeys.Button.X),
-                () -> movementGamepad.getButton(GamepadKeys.Button.Y),
-                () -> movementGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)));
+                () -> movementGamepad.getButton(GamepadKeys.Button.LEFT_BUMPER)));
+        /*movementGamepad.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(()-> fingerSubsystem.moveFinger(0.75)));
+        movementGamepad.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(()-> fingerSubsystem.moveFinger(.6)));
+        movementGamepad.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(()-> fingerSubsystem.moveFinger(0.4)));*/
 
 
 

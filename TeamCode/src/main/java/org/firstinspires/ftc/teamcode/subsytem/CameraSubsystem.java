@@ -16,12 +16,10 @@ public class CameraSubsystem extends SubsystemBase {
     private VisionPortal portal;
     private PropProcessor processor;
 
-    private Alliance alliance;
     private PropProcessor.PropPosition result;
 
     public CameraSubsystem(HardwareMap hardwaremap, Alliance alliance) {
         this.result = PropProcessor.PropPosition.CENTER;
-        this.alliance = alliance;
         this.processor = new PropProcessor(alliance);
         portal = new VisionPortal.Builder()
                 .setCamera(hardwaremap.get(WebcamName.class, "Webcam"))

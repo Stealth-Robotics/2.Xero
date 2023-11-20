@@ -17,13 +17,8 @@ public class DefaultArmCommand extends CommandBase {
 
     //Top and bottom of where the arm can go without colliding with other parts of robot
 
-    public final int ArmMax = 1;
-    public final int armAboveBarMin = 1;
-    public final int armBelowBarMax = 1;
-    public final int ArmMin = 1;
-    public final int wristScorePosition = 1;
-    public final int wristAvoidBarPosition = 1;
-    public final int wristIntakePosition = 1;
+    public final int ArmMax = -6300;
+    public final int ArmMin = 0;
 
 
     public DefaultArmCommand(ArmSubsystem arm, DoubleSupplier leftStickY) {

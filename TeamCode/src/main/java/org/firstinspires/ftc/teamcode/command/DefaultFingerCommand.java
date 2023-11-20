@@ -8,33 +8,35 @@ import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 public class DefaultFingerCommand extends CommandBase {
-    double intakePosition = 0.9;
-    double closedPosition = 0.7;
-    double openPosition = 1;
-    BooleanSupplier bButton;
+    double intakePosition = 1;
+    double block2Position = 0.75;
+    double block1Position = 0.6;
+    double openPosition = 0.4;
+    BooleanSupplier RB;
     BooleanSupplier xButton;
-    BooleanSupplier yButton;
-    DoubleSupplier rightTrigger;
+    BooleanSupplier LB;
     FingerSubsystem finger;
 
-    public DefaultFingerCommand(FingerSubsystem finger, BooleanSupplier bButton, BooleanSupplier xButton, BooleanSupplier yButton, DoubleSupplier rightTrigger){
+    public DefaultFingerCommand(FingerSubsystem finger, BooleanSupplier RB, BooleanSupplier xButton, BooleanSupplier LB){
         this.finger = finger;
-        this.bButton = bButton;
+        this.RB = RB;
         this.xButton = xButton;
-        this.yButton = yButton;
-        this.rightTrigger = rightTrigger;
+        this.LB = LB;
         addRequirements(finger);
     }
     public void moveFinger(double y){
         finger.moveFinger(y);
     }
     public void execute(){;
-        if(rightTrigger.getAsDouble()>0.5) {
-            finger.moveFinger(openPosition);
-        }
-        else if (xButton.getAsBoolean()) {
+        if(xButton.getAsBoolean()){
             finger.moveFinger(intakePosition);
-        } else finger.moveFinger(closedPosition);
+        } else if(RB.getAsBoolean() ^ LB.getAsBoolean()) {
+            finger.moveFinger(block1Position);
+        } else if (RB.getAsBoolean() && LB.getAsBoolean()) {
+            finger.moveFinger(openPosition);
+        } else {
+            finger.moveFinger(block2Position);
+        }
 
     }
     /*public void execute(){

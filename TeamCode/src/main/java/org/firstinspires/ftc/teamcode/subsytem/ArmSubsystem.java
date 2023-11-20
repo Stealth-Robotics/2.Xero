@@ -17,7 +17,7 @@ public class ArmSubsystem extends SubsystemBase {
     private final PIDController armController;
 
     Telemetry telemetry;
-    double kp = 0.085;
+    double kp = 0.07;
     double kd = 0.0001;
     double ki = 0;
     DigitalChannel limitSwitch;
@@ -53,12 +53,6 @@ public class ArmSubsystem extends SubsystemBase {
     {
         return armController.atSetPoint();
     }
-
-    public boolean atSetpoint()
-    {
-        return armController.atSetPoint();
-    }
-
     public void setRunPID(boolean newValue)
     {
         runPID = newValue;
@@ -70,6 +64,12 @@ public class ArmSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        if(limitSwitch.getState()){
+            elevatorRotMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            elevatorRotMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            setSetPoint(0);
+        }
+
         telemetry.addData("arm position: ", getPosition());
 
         double calc = armController.calculate(getPosition());
@@ -78,6 +78,7 @@ public class ArmSubsystem extends SubsystemBase {
         if(runPID){
             elevatorRotMotor.setPower(-calc);
         }
+        telemetry.addData("Limit Switch", limitSwitch.getState());
         telemetry.addData("error: ", armController.getPositionError());
         telemetry.update();
 

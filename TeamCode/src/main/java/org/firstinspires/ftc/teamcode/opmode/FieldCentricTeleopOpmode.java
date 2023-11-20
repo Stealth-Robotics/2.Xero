@@ -87,11 +87,11 @@ public class FieldCentricTeleopOpmode extends CommandOpMode {
 
         armSubsystem.setDefaultCommand(new DefaultArmCommand(armSubsystem, () -> movementGamepad.getLeftY()));
 
-        fingerSubsystem.setDefaultCommand(new DefaultFingerCommand(fingerSubsystem,
+        /*fingerSubsystem.setDefaultCommand(new DefaultFingerCommand(fingerSubsystem,
                 () -> movementGamepad.getButton(GamepadKeys.Button.B),
                 () -> movementGamepad.getButton(GamepadKeys.Button.X),
                 () -> movementGamepad.getButton(GamepadKeys.Button.Y),
-                () -> movementGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)));
+                () -> movementGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)));*/
 
 
 
