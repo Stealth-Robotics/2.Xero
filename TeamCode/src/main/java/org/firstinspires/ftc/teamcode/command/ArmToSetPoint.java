@@ -22,6 +22,6 @@ public class ArmToSetpoint extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return armSubsystem.atSetpoint();
+        return armSubsystem.atSetPoint();
     }
 }
