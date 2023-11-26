@@ -81,11 +81,12 @@ public class TeleopOpmode extends CommandOpMode {
 
         //wristSubsystem.setDefaultCommand(new DefaultArmCommand(armSubsystem, wristSubsystem, () -> movementGamepad.getLeftY()));
         //wristSubsystem.setDefaultCommand(new DefaultWristCommand(wristSubsystem, armSubsystem.getPosition(), defaultArmCommand));
-        wristSubsystem.setDefaultCommand(new DefaultWristCommand(wristSubsystem, ()-> armSubsystem.getPosition(),() -> movementGamepad.getLeftY()));
+        //This one:
+        wristSubsystem.setDefaultCommand(new DefaultWristCommand(wristSubsystem,()->armSubsystem.getLimitSwitch(),() -> armSubsystem.getPosition(),() -> movementGamepad.getLeftY()));
 
-        /*movementGamepad.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0.23)));
-        movementGamepad.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0)));
-        movementGamepad.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0.5)));*/
+        /*movementGamepad.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0.5)));
+        movementGamepad.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0.55)));
+        movementGamepad.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> wristSubsystem.wristRotate(0.6)));*/
 
 
 

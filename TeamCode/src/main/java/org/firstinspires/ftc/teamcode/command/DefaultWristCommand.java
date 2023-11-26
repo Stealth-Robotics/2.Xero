@@ -2,26 +2,31 @@ package org.firstinspires.ftc.teamcode.command;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
+import org.firstinspires.ftc.teamcode.subsytem.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.WristSubsystem;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 public class DefaultWristCommand extends CommandBase {
     WristSubsystem wrist;
+    ArmSubsystem arm;
     DoubleSupplier armPosition;
-    DefaultArmCommand defaultArmCommand;
     DoubleSupplier leftStickY;
+    BooleanSupplier limitSwitch;
     final double wristIntakePosition = 0.23;
     final double wristSafePosition = 0;
-    final double wristScorePosition = 0.5;
+    final double wristScorePosition = 0.6;
+    final double armWristCoeficcient = 4000;
     //TODO: make a constants file and add these four
     public final int ArmMax = -6300;
+    final int armEnterScoringRange = -4400;
     public final int armAboveBarMin = -2200;
     public final int armBelowBarMax = -50;
     public final int ArmMin = 0;
-    public DefaultWristCommand(WristSubsystem wrist, DoubleSupplier armPosition, DoubleSupplier leftStickY){
+    public DefaultWristCommand(WristSubsystem wrist, BooleanSupplier limitSwitch, DoubleSupplier armPosition, DoubleSupplier leftStickY){
         this.wrist = wrist;
-        this.defaultArmCommand = defaultArmCommand;
+        this.limitSwitch = limitSwitch;
         this.armPosition = armPosition;
         this.leftStickY = leftStickY;
         addRequirements(wrist);
@@ -35,11 +40,13 @@ public class DefaultWristCommand extends CommandBase {
             wrist.wristRotate(wristIntakePosition);
         } else if (armPosition.getAsDouble() <= defaultArmCommand.armAboveBarMin && leftStickY.getAsDouble() > 0){
             wrist.wristRotate(wristScorePosition);*/
-        if ((armPosition.getAsDouble() >= armBelowBarMax && leftStickY.getAsDouble() > 0)||
-                (armPosition.getAsDouble() <= armAboveBarMin && leftStickY.getAsDouble() < 0)){
+        if ((armPosition.getAsDouble() >= armAboveBarMin && leftStickY.getAsDouble() > 0)||
+                (armPosition.getAsDouble() <= armBelowBarMax && armPosition.getAsDouble() >= armAboveBarMin && leftStickY.getAsDouble() < 0)){
             wrist.wristRotate(wristSafePosition);
-        } else if (armPosition.getAsDouble() >= armBelowBarMax && leftStickY.getAsDouble() < 0){
+        } else if ((armPosition.getAsDouble() >= armBelowBarMax && leftStickY.getAsDouble() < 0) && (limitSwitch.getAsBoolean())){
             wrist.wristRotate(wristIntakePosition);
+        } else if (armPosition.getAsDouble() <= armEnterScoringRange){
+            wrist.wristRotate(wristScorePosition + (armPosition.getAsDouble()-armEnterScoringRange)/armWristCoeficcient);
         } else if (armPosition.getAsDouble() <= armAboveBarMin && leftStickY.getAsDouble() > 0){
             wrist.wristRotate(wristScorePosition);
         }

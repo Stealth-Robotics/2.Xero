@@ -35,6 +35,7 @@ public class ArmSubsystem extends SubsystemBase {
 
         armController = new PIDController(kp, ki, kd);
         armController.setTolerance(10);
+
     }
 
     public int getPosition() {
@@ -44,6 +45,11 @@ public class ArmSubsystem extends SubsystemBase {
     public void setPower(double newPower)
     {
         elevatorRotMotor.setPower(newPower);
+        //armController.setSetPoint(armController.getSetPoint()+newPower);
+    }
+
+    public boolean getLimitSwitchStatus(){
+        return(limitSwitch.getState());
     }
 
     public void setSetPoint(double setPoint){
