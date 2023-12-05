@@ -5,7 +5,7 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.subsytem.IntakeSubsystem;
 
 import java.util.function.DoubleSupplier;
-
+// duck
 public class AutonomousIntakeCommand extends CommandBase {
     final IntakeSubsystem intake;
     double speed;
@@ -24,3 +24,5 @@ public class AutonomousIntakeCommand extends CommandBase {
         return true;
     }
 }
+//minecraft is the best game ever
+// not geometry dash or fortnite

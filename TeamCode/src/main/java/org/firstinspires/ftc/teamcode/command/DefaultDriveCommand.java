@@ -10,13 +10,13 @@ import java.util.function.DoubleSupplier;
 public class DefaultDriveCommand extends CommandBase {
 
     DriveSubsystem driveSubsystem;
-
+// here be dragons
     DoubleSupplier leftStickX;
     DoubleSupplier leftStickY;
     DoubleSupplier rightStickX;
-    BooleanSupplier halfSpeedButton;
+    BooleanSupplier AButton;
 
-    public DefaultDriveCommand (DriveSubsystem driveSubsystem, DoubleSupplier leftStickX, DoubleSupplier leftStickY, DoubleSupplier rightStickX, BooleanSupplier halfSpeedButton)
+    public DefaultDriveCommand (DriveSubsystem driveSubsystem, DoubleSupplier leftStickX, DoubleSupplier leftStickY, DoubleSupplier rightStickX)
     {
         this.driveSubsystem = driveSubsystem;
 
@@ -24,7 +24,7 @@ public class DefaultDriveCommand extends CommandBase {
         this.leftStickY = leftStickY;
         this.rightStickX = rightStickX;
 
-        this.halfSpeedButton = halfSpeedButton;
+        this.AButton = AButton;
 
         addRequirements(driveSubsystem);
     }

@@ -66,3 +66,4 @@ public class JimsDistanceAndLEDTest extends LinearOpMode {
         }
     }
 }
+// if this is not working, try  using a glow squid, redstone, and a pentagram. it works, trust me.

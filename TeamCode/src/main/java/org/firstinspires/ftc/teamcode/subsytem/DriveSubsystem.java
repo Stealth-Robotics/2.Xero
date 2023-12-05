@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsytem;
 
+import android.drm.DrmStore;
+
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -27,6 +29,11 @@ public class DriveSubsystem extends SubsystemBase {
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightRearDrive.setDirection(DcMotor.Direction.FORWARD);
 
+        leftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftRearDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightRearDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
@@ -52,7 +59,7 @@ public class DriveSubsystem extends SubsystemBase {
         // This code is pulled from Game Manual 0
         // https://gm0.org/en/latest/docs/software/mecanum-drive.html
 
-        double y = leftSickY; // Remember, this is reversed!
+        double y = -leftSickY; // Remember, this is reversed!
         double x = leftStickX * 1.1; // Counteract imperfect strafing
         double rotation = rightStickX;
 
@@ -94,6 +101,13 @@ public class DriveSubsystem extends SubsystemBase {
     }
     public void driveFieldCentric(double leftStickY, double leftStickX, double rightStickX) {
 
+    }
+
+    public void setMotors(Number power){
+        leftFrontDrive.setPower(power.doubleValue());
+        leftRearDrive.setPower(power.doubleValue());
+        rightFrontDrive.setPower(power.doubleValue());
+        rightRearDrive.setPower(power.doubleValue());
     }
 
     public void stop() {

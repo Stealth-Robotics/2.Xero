@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode;
 
 import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -8,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.command.AutonomousCommand;
+import org.firstinspires.ftc.teamcode.command.DriveForTicksCommand;
 import org.firstinspires.ftc.teamcode.subsytem.DriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.FingerSubsystem;
@@ -15,7 +17,7 @@ import org.firstinspires.ftc.teamcode.subsytem.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsytem.WristSubsystem;
 @Autonomous(name = "AutnomousOpMode")
 public class AutonomousOpmode extends LinearOpMode {
-
+// Hi ian!
     DriveSubsystem driveSubsystem;
 
     IntakeSubsystem intakeSubsystem;
@@ -40,7 +42,9 @@ public class AutonomousOpmode extends LinearOpMode {
 
         }
         CommandScheduler.getInstance().schedule(new AutonomousCommand(driveSubsystem,intakeSubsystem,elevatorSubsystem,wristSubsystem,fingerSubsystem));
-        while (!isStopRequested()&&opModeIsActive()) {
+
+        while (opModeIsActive() && !isStopRequested())
+        {
             CommandScheduler.getInstance().run();
         }
 

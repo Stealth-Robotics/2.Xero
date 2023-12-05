@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.command;
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.subsytem.DriveSubsystem;
-
+// why are you driving for ticks? they are nasty little insects
 /**
  * Drive a distance based on the number of encoder ticks from a single wheel.
  * <p>

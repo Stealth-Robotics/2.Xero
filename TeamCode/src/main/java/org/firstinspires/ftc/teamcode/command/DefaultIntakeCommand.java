@@ -11,7 +11,7 @@ public class DefaultIntakeCommand extends CommandBase {
     final IntakeSubsystem intake;
     final DoubleSupplier leftTrigger;
     final DoubleSupplier rightTrigger;
-
+// intake sucks :)
     Telemetry telemetry;
 
     public DefaultIntakeCommand(IntakeSubsystem intake, DoubleSupplier leftTrigger, DoubleSupplier rightTrigger) {
@@ -20,6 +20,7 @@ public class DefaultIntakeCommand extends CommandBase {
         this.rightTrigger = rightTrigger;
 
         addRequirements(intake);
+
     }
     @Override
     public void execute() {

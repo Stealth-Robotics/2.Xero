@@ -43,7 +43,8 @@ public class DefaultWristCommand extends CommandBase {
             wrist.wristRotate(XeroConstants.WristIntakePosition);
         } else if (armPosition.getAsDouble() <= XeroConstants.ArmEnterScoringRange){
             telemetry.addData("wrist state","wrist rotating");
-            wrist.wristRotate(XeroConstants.WristScorePosition + (armPosition.getAsDouble()-XeroConstants.ArmEnterScoringRange)/XeroConstants.ArmWristCoeficcient);
+            //wrist.wristRotate(XeroConstants.WristScorePosition + (armPosition.getAsDouble()-XeroConstants.ArmEnterScoringRange)/XeroConstants.ArmWristCoeficcient);
+            wrist.wristRotate(XeroConstants.WristScorePosition);
         } else if (armPosition.getAsDouble() <= XeroConstants.ArmAboveBarMin && leftStickY.getAsDouble() > 0){
             telemetry.addData("wrist state","wrist score");
             wrist.wristRotate(XeroConstants.WristScorePosition);

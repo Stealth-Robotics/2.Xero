@@ -20,7 +20,7 @@ public class LauncherSubsystem extends SubsystemBase {
     }
     @Override
     public void periodic(){
-        telemetry.addData("launcher position: ", leverServo.getPosition());
+        //telemetry.addData("launcher position: ", leverServo.getPosition());
     }
 
 
