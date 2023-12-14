@@ -68,6 +68,7 @@ public class TeleopOpmode extends StealthOpMode {
         distanceSensorSubsystem = new DistanceSensorSubsystem(hardwareMap);
         driveSubsystem = new DriveSubsystem(hardwareMap);
         intakeSubsystem = new IntakeSubsystem(hardwareMap);
+        cameraSubsystem = new CameraSubsystem(hardwareMap, Alliance.BLUE, telemetry);
         //these two have telemetry so they can print data to the screen
         wristSubsystem = new WristSubsystem(hardwareMap, telemetry);
         armSubsystem = new ArmSubsystem(hardwareMap, telemetry);
@@ -115,7 +116,6 @@ public class TeleopOpmode extends StealthOpMode {
         movementGamepad.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(()-> fingerSubsystem.moveFinger(.6)));
         movementGamepad.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(()-> fingerSubsystem.moveFinger(0.4)));*/
 // the math is mathing
-
 
 
     }

@@ -34,12 +34,12 @@ public class PropProcessor implements VisionProcessor {
     );
 
     static final Rect RIGHT_RECTANGLE = new Rect(
-            new Point(500, 0),
+            new Point(560, 0),
             new Point(640, 480)
     );
     static final Rect CENTER_RECT = new Rect(
             new Point(240, 0),
-            new Point(500, 480)
+            new Point(560, 480)
     );
 
     Scalar lowHSVColorUpper;

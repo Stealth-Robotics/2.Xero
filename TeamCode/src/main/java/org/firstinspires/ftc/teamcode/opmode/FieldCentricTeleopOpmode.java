@@ -62,7 +62,7 @@ public class FieldCentricTeleopOpmode extends CommandOpMode {
         armSubsystem = new ArmSubsystem(hardwareMap, telemetry);
         launcherSubsystem = new LauncherSubsystem(hardwareMap, telemetry);
         fingerSubsystem = new FingerSubsystem(hardwareMap, telemetry);
-        cameraSubsystem = new CameraSubsystem(hardwareMap, Alliance.BLUE);
+        cameraSubsystem = new CameraSubsystem(hardwareMap, Alliance.BLUE, telemetry);
 
         register(driveSubsystem);
         register(intakeSubsystem);
