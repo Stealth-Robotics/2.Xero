@@ -13,24 +13,29 @@ public class ArmSubsystem extends SubsystemBase {
 
     boolean runPID = true;
 
-    private static DcMotorEx elevatorRotMotor;
+    private DcMotorEx elevatorRotMotor;
 
     Telemetry telemetry;
-    double kp = 0.07;
+    double kp = 0.007;
     double kd = 0.0001;
     double ki = 0;
     DigitalChannel limitSwitch;
 
+    private final PIDController armController;
+
+    boolean resetOnce = false;
+
     public ArmSubsystem(HardwareMap hardwareMap, Telemetry telemetry){
+
+        armController = new PIDController(kp, ki, kd);
+        armController.setTolerance(25);
 
         elevatorRotMotor = hardwareMap.get(DcMotorEx.class,"elevatorRotMotor");
         limitSwitch = hardwareMap.get(DigitalChannel.class, "armLimitSwitch");
         this.telemetry = telemetry;
-        elevatorRotMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        setSetPoint(0);
-        elevatorRotMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         elevatorRotMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        elevatorRotMotor.setVelocity(1700);
+        elevatorRotMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        elevatorRotMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
 
@@ -40,18 +45,16 @@ public class ArmSubsystem extends SubsystemBase {
 
     public void setPower(double newPower)
     {
-        setSetPoint((int)(elevatorRotMotor.getTargetPosition()+(newPower*-75)));
+        elevatorRotMotor.setPower(newPower);
     }
 
     public boolean atSetPoint()
     {
-        return elevatorRotMotor.getTargetPosition()==elevatorRotMotor.getCurrentPosition();
+        return armController.atSetPoint();
     }
 
     public void setSetPoint(double setPoint) {
-        if (setPoint <= 0) {
-            elevatorRotMotor.setTargetPosition((int)setPoint);
-        }
+        armController.setSetPoint(setPoint);
     }
 
     public void setRunPID(boolean newValue)
@@ -65,19 +68,30 @@ public class ArmSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if(getLimitSwitch()){
-            elevatorRotMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            setSetPoint(0);
-            elevatorRotMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            elevatorRotMotor.setVelocity(1700);
+//        if(getLimitSwitch() && !resetOnce){
+//            elevatorRotMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//            elevatorRotMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//            setSetPoint(0);
+//
+//            resetOnce = true;
+//        }
+//
+//        else if (!getLimitSwitch() && resetOnce)
+//        {
+//            resetOnce = false;
+//        }
+
+        double calc = armController.calculate(getPosition());
+
+//        telemetry.addData("calcualtion", calc);
+        if(runPID){
+            elevatorRotMotor.setPower(calc);
         }
-
-        telemetry.addData("arm position: ", getPosition());
-        telemetry.addData("set point: ", elevatorRotMotor.getTargetPosition());
-        telemetry.addData("limit switch", getLimitSwitch());
-        telemetry.addData("motor state", elevatorRotMotor.isBusy());
-
-        telemetry.update();
+//
+//        telemetry.addData("arm position: ", getPosition());
+//        telemetry.addData("set point: ", armController.getSetPoint());
+//        telemetry.addData("limit switch", getLimitSwitch());
+//        telemetry.update();
     }
 }
 

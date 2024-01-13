@@ -65,7 +65,7 @@ public class TeleopOpmode extends StealthOpMode {
         movementGamepad = new GamepadEx(gamepad2);
 
 // duck
-        distanceSensorSubsystem = new DistanceSensorSubsystem(hardwareMap);
+        distanceSensorSubsystem = new DistanceSensorSubsystem(hardwareMap, telemetry);
         driveSubsystem = new DriveSubsystem(hardwareMap);
         intakeSubsystem = new IntakeSubsystem(hardwareMap);
         cameraSubsystem = new CameraSubsystem(hardwareMap, Alliance.BLUE, telemetry);

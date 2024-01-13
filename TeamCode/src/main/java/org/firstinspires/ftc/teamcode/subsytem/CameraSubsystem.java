@@ -37,8 +37,6 @@ public class CameraSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         result = processor.getPropPosition();
-        telemetry.addData("position", getResult());
-        telemetry.update();
     }
 
     public PropProcessor.PropPosition getResult() {

@@ -31,8 +31,9 @@ public class DefaultArmCommand extends CommandBase {
 
     @Override
     public void execute() {
-        if(!(((arm.getPosition() < ArmMax) && (leftStickY.getAsDouble() < 0)) || arm.getPosition() > ArmMin && leftStickY.getAsDouble() > 0)){
-            arm.setPower(leftStickY.getAsDouble());
+        if(!(((arm.getPosition() < ArmMax) && (leftStickY.getAsDouble() > 0)) || arm.getPosition() > ArmMin && leftStickY.getAsDouble() < 0)){
+            arm.setRunPID(false);
+            arm.setPower(leftStickY.getAsDouble()*-0.8);
         }/*
         if (arm.getPosition() <= ArmMax && arm.getPosition() > armAboveBarMin)
         {
@@ -43,9 +44,9 @@ public class DefaultArmCommand extends CommandBase {
             wrist.wristRotate(wristIntakePosition);
         }*/
         //Runs the arm at speed (leftstickY/5)
-        if (Math.abs(leftStickY.getAsDouble())>0.1){
+        /*if (Math.abs(leftStickY.getAsDouble())>0.1){
             arm.setRunPID(false);
-            arm.setPower(leftStickY.getAsDouble()*0.8);
+            arm.setPower(leftStickY.getAsDouble()*-0.8);
             setpointSetOnce = false;
         }
 
@@ -53,7 +54,7 @@ public class DefaultArmCommand extends CommandBase {
             setpointSetOnce = true;
             arm.setRunPID(true);
             arm.setSetPoint(arm.getPosition());
-        }
+        }*/
 
    }
 }

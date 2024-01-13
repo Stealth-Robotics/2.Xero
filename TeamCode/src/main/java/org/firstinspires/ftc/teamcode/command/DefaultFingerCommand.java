@@ -31,10 +31,10 @@ public class DefaultFingerCommand extends CommandBase {
     public void execute(){;
         if(rightTrigger.getAsDouble()>0.5){
             finger.moveFinger(intakePosition);
-        } else if(yButton.getAsBoolean()) {
-            finger.moveFinger(block1Position);
         } else if (bButton.getAsBoolean()) {
             finger.moveFinger(openPosition);
+        } else if(yButton.getAsBoolean()) {
+            finger.moveFinger(block1Position);
         } else {
             finger.moveFinger(block2Position);
         }

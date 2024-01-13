@@ -26,8 +26,5 @@ public class AutoAlignCommand extends SequentialCommandGroup {
         );
 
     }
-    public void execute(){
-
-    }
 
 }

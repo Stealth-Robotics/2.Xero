@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.subsytem.pipelines;
 
 import android.graphics.Canvas;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+
 import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibration;
 import org.firstinspires.ftc.vision.VisionProcessor;
 import org.opencv.core.Core;
@@ -17,6 +19,8 @@ public class PropProcessor implements VisionProcessor {
     public enum PropPosition{
         LEFT, CENTER, RIGHT
     }
+
+    private final Alliance alliance;
 
     Mat testMat = new Mat();
     Mat highMat = new Mat();
@@ -34,12 +38,12 @@ public class PropProcessor implements VisionProcessor {
     );
 
     static final Rect RIGHT_RECTANGLE = new Rect(
-            new Point(560, 0),
+            new Point(600, 0),
             new Point(640, 480)
     );
     static final Rect CENTER_RECT = new Rect(
             new Point(240, 0),
-            new Point(560, 480)
+            new Point(600, 480)
     );
 
     Scalar lowHSVColorUpper;
@@ -49,6 +53,9 @@ public class PropProcessor implements VisionProcessor {
 
 
     public PropProcessor(Alliance alliance){
+
+        this.alliance = alliance;
+
         //sets the color thresholds based on alliance
         if(alliance == Alliance.RED){
             lowHSVColorLower = new Scalar(0, 150, 150); //beginning of red
@@ -73,6 +80,8 @@ public class PropProcessor implements VisionProcessor {
     @Override
     public Object processFrame(Mat frame, long captureTimeNanos) {
 
+        Mat copy = frame;
+
 
         //convert to hsv for thresholding
         Imgproc.cvtColor(frame, testMat, Imgproc.COLOR_RGB2HSV);
@@ -90,6 +99,8 @@ public class PropProcessor implements VisionProcessor {
         lowMat.release();
         highMat.release();
 
+        Imgproc.rectangle(copy, LEFT_RECTANGLE, new Scalar(0, 255, 0));
+
         //gets the sum of the pixels in each rectangle
         double leftBox = Core.sumElems(finalMat.submat(LEFT_RECTANGLE)).val[0];
         double rightBox = Core.sumElems(finalMat.submat(RIGHT_RECTANGLE)).val[0];
@@ -101,13 +112,13 @@ public class PropProcessor implements VisionProcessor {
         else if(rightBox == max) result = PropPosition.RIGHT;
         else result = PropPosition.CENTER;
 
-        if(leftBox < 500000 && centerBox < 500000 && rightBox < 500000 ){
+        if(leftBox < 1500000 && centerBox < 1500000 && rightBox < 1500000 ){
             result = PropPosition.RIGHT;
         }
-//        FtcDashboard.getInstance().getTelemetry().addData("left", leftBox);
-//        FtcDashboard.getInstance().getTelemetry().addData("center", centerBox);
-//        FtcDashboard.getInstance().getTelemetry().addData("right", rightBox);
-//        FtcDashboard.getInstance().getTelemetry().update();
+        FtcDashboard.getInstance().getTelemetry().addData("left", leftBox);
+        FtcDashboard.getInstance().getTelemetry().addData("center", centerBox);
+        FtcDashboard.getInstance().getTelemetry().addData("right", rightBox);
+        FtcDashboard.getInstance().getTelemetry().update();
 
         finalMat.copyTo(frame);
         //frame.copyTo(frame);
@@ -123,6 +134,21 @@ public class PropProcessor implements VisionProcessor {
 
     }
     public PropPosition getPropPosition(){
+
+//        if(alliance == Alliance.RED)
+//        {
+//            switch (result)
+//            {
+//                case LEFT:
+//                    result = PropPosition.RIGHT;
+//                    break;
+//
+//                case RIGHT:
+//                    result = PropPosition.LEFT;
+//                    break;
+//            }
+//        }
+
         return result;
     }
 
